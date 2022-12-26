@@ -26,6 +26,7 @@ export default function AddTask() {
          <input
             type="text"
             className="rounded"
+            required
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                setTask(e.target.value)
             }
