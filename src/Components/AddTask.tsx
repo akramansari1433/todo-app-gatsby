@@ -25,15 +25,16 @@ export default function AddTask() {
       <form onSubmit={handleSubmit} className="flex justify-center mt-3">
          <input
             type="text"
-            className="rounded"
+            className="rounded p-1"
             required
+            placeholder="Enter task name"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                setTask(e.target.value)
             }
          />
          <button
             type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white rounded p-1 mx-2"
+            className="bg-black hover:bg-blue-700 text-white rounded p-1 mx-2"
          >
             Add Task
          </button>
