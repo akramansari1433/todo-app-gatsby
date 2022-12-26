@@ -29,7 +29,7 @@ const IndexPage: React.FC<PageProps> = () => {
       <div>
          <h1 className="text-5xl underline text-center p-5">Todo App</h1>
          <AddTask />
-         <div className="flex flex-wrap justify-center items-center my-10">
+         <div className="flex flex-col justify-center items-center my-10">
             {tasks.map((task) => (
                <Task key={task.id} task={task} />
             ))}

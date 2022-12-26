@@ -23,11 +23,13 @@ const handleMarkCompleted = async (id: number) => {
 };
 
 const handleDelete = async (id: number) => {
-   await fetch(`${uri}/${id}`, {
-      method: "DELETE",
+   await fetch(`${uri}/delete/${id}`, {
+      method: "GET",
    })
-      .then((response) => console.log(response))
+      .then((response) => response.json())
+      .then((data) => data && alert(data.message))
       .catch((error) => console.log(error));
+   location.reload();
 };
 
 export default function Task({ task }: TaskProps) {
