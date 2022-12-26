@@ -1,23 +1,25 @@
-import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function AddTask() {
    const [task, setTask] = useState<string>();
 
-   const handleSubmit = (e: any) => {
+   const uri =
+      "https://postgrest-worker-example.akramansari1433.workers.dev/tasks";
+
+   const handleSubmit = async (e: any) => {
       e.preventDefault();
-      axios
-         .post(
-            "https://postgrest-worker-example.akramansari1433.workers.dev/tasks",
-            { task: task, priority: "medium" }
-         )
-         .then((response) => {
-            console.log(response);
-         })
-         .catch((err) => {
-            console.log(err);
-         });
+      await fetch(uri, {
+         method: "POST",
+         body: JSON.stringify({ task: task, priority: "medium" }),
+      })
+         .then((response) => response.json())
+         .then((data) => data && alert(`${data[0].task} added successfully`))
+         .catch((error) => console.log(error));
+      e.target.reset();
+      location.reload();
    };
+
+   useEffect(() => {}, [handleSubmit]);
 
    return (
       <form onSubmit={handleSubmit} className="flex justify-center mt-3">

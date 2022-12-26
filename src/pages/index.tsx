@@ -3,7 +3,6 @@ import type { HeadFC, PageProps } from "gatsby";
 import "../styles/global.css";
 import Task from "../Components/Task";
 import AddTask from "../Components/AddTask";
-import axios from "axios";
 
 type Task = {
    id: number;
@@ -14,18 +13,15 @@ type Task = {
 
 const IndexPage: React.FC<PageProps> = () => {
    const [tasks, setTasks] = useState<Task[]>([]);
+   const uri =
+      "https://postgrest-worker-example.akramansari1433.workers.dev/tasks";
+
    useEffect(() => {
       (async () => {
-         await axios
-            .get(
-               "https://postgrest-worker-example.akramansari1433.workers.dev/tasks"
-            )
-            .then((response) => {
-               if (response.data) setTasks(response.data);
-            })
-            .catch((err) => {
-               console.log(err);
-            });
+         await fetch(uri)
+            .then((response) => response.json())
+            .then((data) => data && setTasks(data))
+            .catch((error) => console.log(error));
       })();
    }, []);
 
@@ -33,7 +29,7 @@ const IndexPage: React.FC<PageProps> = () => {
       <div>
          <h1 className="text-5xl underline text-center p-5">Todo App</h1>
          <AddTask />
-         <div className="flex flex-col justify-center items-center my-10">
+         <div className="flex flex-wrap justify-center items-center my-10">
             {tasks.map((task) => (
                <Task key={task.id} task={task} />
             ))}

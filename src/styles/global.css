@@ -2,15 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
 body {
-   height: 100%;
-}
-body {
-   background: radial-gradient(
-      at top left,
-      rgb(121, 141, 227) 0%,
-      rgb(236, 103, 185) 100%
+   margin: 0;
+   background: linear-gradient(
+      to right,
+      rgb(238, 125, 125),
+      rgb(251, 133, 239)
    );
-   background-repeat: no-repeat;
 }
