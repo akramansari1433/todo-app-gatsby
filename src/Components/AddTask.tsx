@@ -13,7 +13,7 @@ export default function AddTask() {
          body: JSON.stringify({ task: task, priority: "medium" }),
       })
          .then((response) => response.json())
-         .then((data) => data && alert(`${data[0].task} added successfully`))
+         .then((data) => data && alert(data.message || data.error))
          .catch((error) => console.log(error));
       e.target.reset();
       location.reload();

@@ -7,8 +7,7 @@ import AddTask from "../Components/AddTask";
 type Task = {
    id: number;
    task: string;
-   iscompleted: boolean;
-   createdat: string;
+   completed: boolean;
 };
 
 const IndexPage: React.FC<PageProps> = () => {

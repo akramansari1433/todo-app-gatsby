@@ -4,8 +4,7 @@ type TaskProps = {
    task: {
       id: number;
       task: string;
-      iscompleted: boolean;
-      createdat: string;
+      completed: boolean;
    };
 };
 const uri =
@@ -14,10 +13,9 @@ const uri =
 const handleMarkCompleted = async (id: number) => {
    await fetch(`${uri}/update/${id}`, {
       method: "POST",
-      body: JSON.stringify({ iscompleted: true }),
    })
       .then((response) => response.json())
-      .then((data) => data && alert(`${data[0].task} marked completed`))
+      .then((data) => data && alert(data.message || data.error))
       .catch((error) => console.log(error));
    location.reload();
 };
@@ -27,7 +25,7 @@ const handleDelete = async (id: number) => {
       method: "GET",
    })
       .then((response) => response.json())
-      .then((data) => data && alert(data.message))
+      .then((data) => data && alert(data.message || data.error))
       .catch((error) => console.log(error));
    location.reload();
 };
@@ -37,7 +35,7 @@ export default function Task({ task }: TaskProps) {
       <div className="flex items-center justify-between w-96 border rounded p-2 mx-3 my-2">
          <p className="mr-3">{task.task}</p>
          <div>
-            {task.iscompleted ? (
+            {task.completed ? (
                <button
                   disabled
                   className="w-40 bg-green-700  text-white rounded p-1 mx-1"
