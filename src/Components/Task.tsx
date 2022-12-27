@@ -32,19 +32,19 @@ const handleDelete = async (id: number) => {
 
 export default function Task({ task }: TaskProps) {
    return (
-      <div className="flex items-center justify-between w-96 border rounded p-2 mx-3 my-2">
-         <p className="mr-3">{task.task}</p>
+      <div className="flex items-center justify-between w-96 border rounded p-2 m-3">
+         <p className="break-all">{task.task}</p>
          <div>
             {task.completed ? (
                <button
                   disabled
-                  className="w-40 bg-green-700  text-white rounded p-1 mx-1"
+                  className="bg-green-700  text-white rounded p-1 m-1"
                >
                   Completed
                </button>
             ) : (
                <button
-                  className="w-40 bg-green-700 hover:bg-green-900 text-white rounded p-1 mx-1"
+                  className="bg-green-700 hover:bg-green-900 text-white rounded p-1 m-1"
                   onClick={() => handleMarkCompleted(task.id)}
                >
                   Mark Complete
@@ -52,7 +52,7 @@ export default function Task({ task }: TaskProps) {
             )}
 
             <button
-               className="bg-red-400 hover:bg-red-500 text-black rounded p-1 mx-1"
+               className="bg-red-400 hover:bg-red-500 text-black rounded p-1 m-1"
                onClick={() => handleDelete(task.id)}
             >
                Delete
