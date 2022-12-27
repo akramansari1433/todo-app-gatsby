@@ -1,28 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
-export default function AddTask() {
-   const [task, setTask] = useState<string>();
+type AddTaskProps = {
+   handleAddTask: (e: React.FormEvent<HTMLFormElement>, task: string) => void;
+};
 
-   const uri =
-      "https://postgrest-worker-example.akramansari1433.workers.dev/tasks";
-
-   const handleSubmit = async (e: any) => {
-      e.preventDefault();
-      await fetch(uri, {
-         method: "POST",
-         body: JSON.stringify({ task: task, priority: "medium" }),
-      })
-         .then((response) => response.json())
-         .then((data) => data && alert(data.message || data.error))
-         .catch((error) => console.log(error));
-      e.target.reset();
-      location.reload();
-   };
-
-   useEffect(() => {}, [handleSubmit]);
-
+export default function AddTask({ handleAddTask }: AddTaskProps) {
+   const [task, setTask] = useState<string>("");
    return (
-      <form onSubmit={handleSubmit} className="flex justify-center mt-3">
+      <form
+         onSubmit={(e) => {
+            handleAddTask(e, task);
+            e.currentTarget.reset();
+         }}
+         className="flex justify-center mt-3"
+      >
          <input
             type="text"
             className="rounded p-1"

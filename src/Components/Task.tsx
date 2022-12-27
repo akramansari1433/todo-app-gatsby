@@ -6,31 +6,15 @@ type TaskProps = {
       task: string;
       completed: boolean;
    };
-};
-const uri =
-   "https://postgrest-worker-example.akramansari1433.workers.dev/tasks";
-
-const handleMarkCompleted = async (id: number) => {
-   await fetch(`${uri}/update/${id}`, {
-      method: "POST",
-   })
-      .then((response) => response.json())
-      .then((data) => data && alert(data.message || data.error))
-      .catch((error) => console.log(error));
-   location.reload();
+   handleDelete: (id: number) => void;
+   handleMarkCompleted: (id: number) => void;
 };
 
-const handleDelete = async (id: number) => {
-   await fetch(`${uri}/delete/${id}`, {
-      method: "GET",
-   })
-      .then((response) => response.json())
-      .then((data) => data && alert(data.message || data.error))
-      .catch((error) => console.log(error));
-   location.reload();
-};
-
-export default function Task({ task }: TaskProps) {
+export default function Task({
+   task,
+   handleDelete,
+   handleMarkCompleted,
+}: TaskProps) {
    return (
       <div className="flex items-center justify-between w-96 border rounded p-2 m-3">
          <p className="break-all">{task.task}</p>

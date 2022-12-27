@@ -10,27 +10,79 @@ type Task = {
    completed: boolean;
 };
 
+export const uri =
+   "https://postgrest-worker-example.akramansari1433.workers.dev/tasks";
+
 const IndexPage: React.FC<PageProps> = () => {
    const [tasks, setTasks] = useState<Task[]>([]);
-   const uri =
-      "https://postgrest-worker-example.akramansari1433.workers.dev/tasks";
+
+   const getTasks = async () => {
+      await fetch(uri)
+         .then((response) => response.json())
+         .then((data) => data && setTasks(data))
+         .catch((error) => console.log(error));
+   };
+
+   const handleAddTask = async (
+      e: React.FormEvent<HTMLFormElement>,
+      task: string
+   ) => {
+      e.preventDefault();
+      await fetch(uri, {
+         method: "POST",
+         body: JSON.stringify({ task: task }),
+      })
+         .then((response) => response.json())
+         .then((data) => {
+            if (data) {
+               getTasks();
+            }
+         })
+         .catch((error) => console.log(error));
+   };
+
+   const handleMarkCompleted = async (id: number) => {
+      await fetch(`${uri}/update/${id}`, {
+         method: "POST",
+      })
+         .then((response) => response.json())
+         .then((data) => {
+            if (data) {
+               getTasks();
+            }
+         })
+         .catch((error) => console.log(error));
+   };
+
+   const handleDelete = async (id: number) => {
+      await fetch(`${uri}/delete/${id}`, {
+         method: "GET",
+      })
+         .then((response) => response.json())
+         .then((data) => {
+            if (data) {
+               getTasks();
+            }
+         })
+         .catch((error) => console.log(error));
+   };
 
    useEffect(() => {
-      (async () => {
-         await fetch(uri)
-            .then((response) => response.json())
-            .then((data) => data && setTasks(data))
-            .catch((error) => console.log(error));
-      })();
+      getTasks();
    }, []);
 
    return (
       <div>
          <h1 className="text-5xl underline text-center p-5">Todo App</h1>
-         <AddTask />
+         <AddTask handleAddTask={handleAddTask} />
          <div className="flex flex-col justify-center items-center my-10">
             {tasks.map((task) => (
-               <Task key={task.id} task={task} />
+               <Task
+                  key={task.id}
+                  task={task}
+                  handleMarkCompleted={handleMarkCompleted}
+                  handleDelete={handleDelete}
+               />
             ))}
          </div>
       </div>
